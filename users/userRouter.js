@@ -2,6 +2,7 @@
 const express = require('express');
 //db
 const userDb = require('./userDb');
+const postDb = require('../posts/postDb');
 //generate router
 const router = express.Router();
 //middleware
@@ -22,8 +23,25 @@ router.post('/', validation.validateUser, (req, res) => {
   // do your magic!
 });
 
-router.post('/:userId/posts', (req, res) => {
-  // do your magic!
+const postingPosts__MiddlewareStacc = [validation.validatePost, validation.validateUserId];
+router.post('/:userId/posts', ...postingPosts__MiddlewareStacc , (req, res) => {
+  // posted object has 2 props: user_id && text
+  const userId = req.params.userId;
+  const newPost = {
+    ...req.body,
+    user_id: userId
+  }
+  console.log(newPost);
+
+  postDb.insert(newPost)
+    .then( reso => {
+      console.log(reso);
+      res.status(200).json({ post: req.body, message: "Status 200: successful post"})
+    })
+    .catch( err => {
+      console.log(err);
+      res.status(500).json({ message: "Internal server error 500: could not write post" })
+    })
 });
 
 router.get('/', (req, res) => {

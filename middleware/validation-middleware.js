@@ -31,8 +31,25 @@ const validateUserId = (req, res, next) => {
     })
 }
 
+const validatePost = (req, res, next) => {
+  if (Object.entries(req.body).length) {
+    if(req.body.text) {
+      console.log('req.body && req.body.text');
+      next();
+    } else {
+      console.log(req.body);
+      res.status(400).json({ message: "missing required text field" })
+    }
+
+  } else {
+    console.log(req.body);
+    res.status(400).json({ message: "missing post data" })
+  }
+}
+
 const validation = {
   validateUser: validateUser,
-  validateUserId: validateUserId
+  validateUserId: validateUserId,
+  validatePost: validatePost
 }
 module.exports = validation;
