@@ -1,30 +1,42 @@
 //express
 const express = require('express');
-
+//db
+const userDb = require('./userDb');
 //generate router
 const router = express.Router();
 //middleware
 //validation
 const validation = require('../middleware/validation-middleware');
 
-router.post('/', (req, res) => {
+router.post('/', validation.validateUser, (req, res) => {
+
+  userDb.insert(req.body)
+    .then( user => {
+      res.status(200).json({ message: 'successfully added a new user', newUser: req.body, userId: user })
+    })
+    .catch( err => {
+      console.log(err);
+      res.status(500).json({ error: 'Internal server error 500: could not add user' })
+    })
+
   // do your magic!
 });
 
-router.post('/:id/posts', (req, res) => {
+router.post('/:userId/posts', (req, res) => {
   // do your magic!
 });
 
-router.get('/', validation.validateUser, (req, res) => {
+router.get('/', (req, res) => {
   // do your magic!
   console.log('inside /api/users GET');
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:userId', validation.validateUserId, (req, res) => {
   // do your magic!
+  console.log('inside /api/users/:userId GET')
 });
 
-router.get('/:id/posts', (req, res) => {
+router.get('/:userId/posts', (req, res) => {
   // do your magic!
 });
 

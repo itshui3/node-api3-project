@@ -2,6 +2,9 @@
 const express = require('express');
 const server = express();
 // server middleware
+server.use(express.json());
+const cors = require('cors');
+server.use(cors());
 const logger = require('./middleware/logger-middleware');
 server.use(logger);
 // routers
