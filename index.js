@@ -1,5 +1,6 @@
+require('dotenv').config()
 // code away!
 const server = require('./server.js');
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 server.listen(5000, () => console.log(`get da monees at port ${port}`));
