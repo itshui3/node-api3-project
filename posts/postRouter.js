@@ -16,19 +16,19 @@ router.get('/', (req, res) => {
     })
 });
 
-// router.get('/:postId', (req, res) => {
-//   // do your magic!
-//   const postId = req.params.postId;
-//   postDb.getById(postId)
-//     .then( reso => {
-//       console.log(reso);
-//       res.status(200).json({ message: "Status 200: fetched posts", posts: reso })
-//     })
-//     .catch( err => {
-//       console.log(err);
+router.get('/:postId', (req, res) => {
+  // do your magic!
+  const postId = req.params.postId;
+  postDb.getById(postId)
+    .then( reso => {
+      console.log(reso);
+      res.status(200).json({ message: "Status 200: fetched posts", posts: reso })
+    })
+    .catch( err => {
+      console.log(err);
 
-//     })
-// });
+    })
+});
 
 router.delete('/:postId', (req, res) => {
   // do your magic!
