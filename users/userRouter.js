@@ -103,7 +103,7 @@ router.delete('/:userId', (req, res) => {
 });
 
 const PUT__users__MiddlewareStacc = [validation.validateUser, validation.validateUserId];
-router.put('/:userId', ...PUT__users__MiddlewareStacc, (req, res) => {
+router.put('/:userId', ...PUT__users__MiddlewareStacc, (req, res, next) => {
   // do your magic!
   const userId = req.params.userId;
   userDb.update(userId, req.body)
@@ -112,8 +112,16 @@ router.put('/:userId', ...PUT__users__MiddlewareStacc, (req, res) => {
     })
     .catch( err => {
       console.log(err);
+      // const error = new Error('Internal server error 500: could not update user');
+      // next(error);
       res.status(500).json({ message: "Internal server error 500: could not update user" })
     })
 });
+
+router.use((err, req, res, next) => {
+  console.log(err, 'my error');
+
+  res.status(500).json({ message: err })
+})
 
 module.exports = router;
