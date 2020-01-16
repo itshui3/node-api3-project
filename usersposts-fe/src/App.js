@@ -11,6 +11,7 @@ function App() {
   return (
     <div className="App">
       <Route path='/users' component={Users} />
+      <Route path='/posts' component={Posts} />
     </div>
   );
 }
