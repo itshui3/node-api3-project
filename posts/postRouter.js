@@ -3,6 +3,8 @@ const express = require('express');
 const postDb = require('./postDb');
 //build router
 const router = express.Router();
+//middleware
+const validation = require('../middleware/validation-middleware')
 
 router.get('/', (req, res) => {
   // do your magic!
@@ -39,7 +41,7 @@ router.delete('/:postId', (req, res) => {
     })
 });
 
-router.put('/:postId', (req, res) => {
+router.put('/:postId', validation.validatePostId, (req, res) => {
   // do your magic!
   const postId = req.params.postId;
   const updatedPost = req.body;
@@ -53,11 +55,5 @@ router.put('/:postId', (req, res) => {
       res.status(500).json({ message: "Internal server error 500: could not update post"})
     })
 });
-
-// custom middleware
-
-function validatePostId(req, res, next) {
-  // do your magic!
-}
 
 module.exports = router;

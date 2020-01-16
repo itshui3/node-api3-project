@@ -1,6 +1,7 @@
 const express = require('express');
 //db
 const userDb = require('../users/userDb');
+const postDb = require('../posts/postDb');
 
 const validateUser = (req, res, next) => {  
   if (Object.entries(req.body).length) {
@@ -47,9 +48,30 @@ const validatePost = (req, res, next) => {
   }
 }
 
+// postRouter
+
+const validatePostId = (req, res, next) => {
+  const postId = req.params.postId;
+  postDb.getById(postId)
+    .then( reso => {
+      console.log(reso);
+      if (reso) {
+        next();
+      } else {
+        res.status(404).json({ message: "404 resource not found" })
+      }
+      
+    })
+    .catch( err => {
+      console.log(err);
+      res.status(500).json({ message: "500 could not check resource"})
+    })
+}
+
 const validation = {
   validateUser: validateUser,
   validateUserId: validateUserId,
-  validatePost: validatePost
+  validatePost: validatePost,
+  validatePostId: validatePostId
 }
 module.exports = validation;
