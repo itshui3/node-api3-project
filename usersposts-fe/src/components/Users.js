@@ -5,6 +5,8 @@ import { connect, useDispatch } from 'react-redux'
 import constants from '../redux/constants'
 //axios
 import Axios from 'axios'
+//styling
+import './Users.scss'
 
 // renders a list of users with the property name displayed
 

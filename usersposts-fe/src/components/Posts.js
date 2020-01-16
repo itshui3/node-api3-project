@@ -5,6 +5,8 @@ import { connect, useDispatch } from 'react-redux'
 import constants from '../redux/constants'
 //axios
 import Axios from 'axios'
+//styling
+import './Posts.scss'
 
 
 const Posts = props => {
